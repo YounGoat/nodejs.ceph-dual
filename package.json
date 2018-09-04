@@ -1,6 +1,10 @@
 {
     "bin": {},
-    "dependencies": {},
+    "dependencies": {
+        "ceph": "^0.9.5",
+        "jinang": "^0.22.0",
+        "noda": "^0.5.0"
+    },
     "devDependencies": {
         "mocha": "^3.3.0"
     },
@@ -9,7 +13,7 @@
         "test": "mocha"
     },
     "name": "ceph-dual",
-    "version": "0.0.1",
+    "version": "0.0.0",
     "main": "swift/index.js",
     "keywords": [
         "ceph",
