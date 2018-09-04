@@ -1,0 +1,29 @@
+{
+    "bin": {},
+    "dependencies": {},
+    "devDependencies": {
+        "mocha": "^3.3.0"
+    },
+    "directories": {},
+    "scripts": {
+        "test": "mocha"
+    },
+    "name": "ceph-dual",
+    "version": "0.0.1",
+    "main": "swift/index.js",
+    "keywords": [
+        "ceph",
+        "dual-write"
+    ],
+    "homepage": "https://github.com/YounGoat/nodejs.ceph-dual",
+    "description": "Parallelly write to two or more CEPH storages.",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/YounGoat/nodejs.ceph-dual.git"
+    },
+    "author": {
+        "name": "YounGoat",
+        "email": "youngoat@163.com",
+        "url": "https://youngoat.github.io"
+    }
+}
