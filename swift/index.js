@@ -33,7 +33,7 @@ util.inherits(Connection, events.EventEmitter);
 Connection.prototype._action = function(action, callback) {
 	return PoC(done => {
 		Promise.all(this.conns.map(action))
-			.then(data => done(null, data))
+			.then(data => done(null, data[0]))
 			.catch(done)
 			;	
 	}, callback);
