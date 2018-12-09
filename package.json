@@ -13,7 +13,7 @@
         "test": "mocha"
     },
     "name": "ceph-dual",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "main": "swift/index.js",
     "keywords": [
         "ceph",

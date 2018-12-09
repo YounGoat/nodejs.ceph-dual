@@ -70,6 +70,18 @@ Connection.prototype._action = function(action, callback) {
 		let conn = this.conns[0];
 		return conn[fnName].apply(conn, arguments);
 	};
+}); 
+
+Connection.prototype.get = function(name) {
+	let conn = this.conns[0];
+	switch (name.toLowerCase()) {
+		case 'style'       : return conn.get('style');
+		case 'container'   : return conn.get('container');
+	}
+};
+
+Connection.prototype.__defineSetter__('container', function(value) {
+	this.conns.forEach(conn => conn.container = value);
 });
 
 /**
