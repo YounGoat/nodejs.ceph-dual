@@ -13,8 +13,8 @@
         "test": "mocha"
     },
     "name": "ceph-dual",
-    "version": "0.0.3",
-    "main": "swift/index.js",
+    "version": "0.0.4",
+    "main": "index.js",
     "keywords": [
         "ceph",
         "dual-write"
