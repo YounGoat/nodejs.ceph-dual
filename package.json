@@ -1,8 +1,8 @@
 {
     "bin": {},
     "dependencies": {
-        "ceph": "^0.9.5",
-        "jinang": "^0.22.0",
+        "ceph": "^1.0.0",
+        "jinang": "^0.26.1",
         "noda": "^0.5.0"
     },
     "devDependencies": {
@@ -13,7 +13,7 @@
         "test": "mocha"
     },
     "name": "ceph-dual",
-    "version": "0.0.4",
+    "version": "0.1.0",
     "main": "index.js",
     "keywords": [
         "ceph",

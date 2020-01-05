@@ -20,7 +20,7 @@ Use __ceph-dual__ to parallelly operate two or more CEPH storages with ease.
 ##	Get Started
 
 ```javascript
-const cephDual = require('ceph-dual/swift');
+const cephDual = require('ceph-dual');
 
 const connConfig_master =  {
     endPoint   : 'http://storage1.example.com/',
@@ -34,7 +34,7 @@ const connConfig_slave = {
     key        : '380289ba59473a368c593c1f1de6efb0380289ba5',
 };
 
-const conn = cephDual.Connection([ connConfig_master, connConfig_slave ]);
+const conn = new cephDual.Connection([ connConfig_master, connConfig_slave ]);
 
 conn.createContainer('demoBucket', (err) => {
     // ...
@@ -43,9 +43,9 @@ conn.createContainer('demoBucket', (err) => {
 
 ##	API
 
-This package is isomorphic with package [ceph](https://www.npmjs.com/package/ceph). Each time a member method of a `ceph-dual/swift.Connection()` instance invoked, same invokations will be applied to the `ceph/swift.Connection()` instances which are owned by it. The methods will be resolved or callback WITHOUT exception only if all the sub invokations succeeds. If any of the sub invokations fails, the methods will be rejected or callback WITH an exception. 
+This package is nearly isomorphic with package [ceph](https://www.npmjs.com/package/ceph). Each time a member method of a __ceph-dual.Connection__ instance invoked, same invokations will be applied to the __ceph/\*.Connection__ instances which are owned by it. The methods will be resolved or callback WITHOUT exception only if all the sub invokations succeeds. If any of the sub invokations fails, the methods will be rejected or callback WITH an exception. 
 
-To be compatible with `ceph/swift.Connection()`, on success, the methods will be resolved or callback with data passed through from the methods of the master `ceph/swift.Connection()`. E.g.
+To keep compatible, the input and output of a method are smiliar with those of the homonymous method in __ceph/\*.Connection__. E.g.
 
 ```javascript
 conn.createObject({ container: 'demoBucket', name: 'hello.txt' }, 'Hello Ching!', (err, data) => {

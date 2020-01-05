@@ -1,5 +1,4 @@
 /**
- * @deprecated
  * @author youngoat@163.com
  */
 
@@ -11,7 +10,7 @@ const MODULE_REQUIRE = 1
 	, events = require('events')
 
 	/* NPM */
-	, swift = require('ceph/swift')
+	, ceph = require('ceph')
 	, PoC = require('jinang/PoC')
 
 	/* in-file */
@@ -21,11 +20,11 @@ const MODULE_REQUIRE = 1
  * Create a new connection to multi Ceph services.
  * @class
  * 
- * @param  {Array}   configs 
+ * @param  {Array}   optionsGroup 
  * @param  {object}  settings
  */
-const Connection = function(configs, settings) {
-	this.conns = configs.map(config => new swift.Connection(config, settings));
+const Connection = function(optionsGroup, settings) {
+	this.conns = optionsGroup.map(options => ceph.createConnection(options, settings));
 };
 
 // Inherit class EventEmitter in order to invoke methods .emit(), .on(), .once() etc.
@@ -35,17 +34,18 @@ Connection.prototype._action = function(action, callback) {
 	return PoC(done => {
 		Promise.all(this.conns.map(action))
 			.then(data => done(null, data[0]))
-			.catch(done)
-			;	
+			.catch(ex => done(ex))
+			;
 	}, callback);
 };
 
 // Define operation functions.
 [	'connect', 
-	'createObject', 
 	'copyObject',
 	'createContainer',
-	'createObjectMeta',
+	'createBucket',
+	'createObject', 
+	'deleteBucket',
 	'deleteContainer',
 	'deleteObject',
 ].forEach(fnName => {
@@ -60,9 +60,10 @@ Connection.prototype._action = function(action, callback) {
 });
 
 // Define read-only functions.
-[	'findContainers', 
+[	'findBuckets', 
+	'findContainers', 
 	'findObjects',
-	'generateTempUrl',
+	'readBucket',
 	'readContainer',
 	'readObject',
 	'readObjectMeta',
@@ -71,19 +72,16 @@ Connection.prototype._action = function(action, callback) {
 		let conn = this.conns[0];
 		return conn[fnName].apply(conn, arguments);
 	};
-}); 
-
-Connection.prototype.get = function(name) {
-	let conn = this.conns[0];
-	switch (name.toLowerCase()) {
-		case 'style'       : return conn.get('style');
-		case 'container'   : return conn.get('container');
-	}
-};
-
-Connection.prototype.__defineSetter__('container', function(value) {
-	this.conns.forEach(conn => conn.container = value);
 });
+
+let setBucket = function(value) {
+	this.conns.forEach(conn => {
+		conn.container = value;
+		conn.bucket = value;
+	});
+};
+Connection.prototype.__defineSetter__('container', setBucket);
+Connection.prototype.__defineSetter__('bucket', setBucket);
 
 /**
  * To learn whether connection created successfully.
@@ -97,6 +95,4 @@ Connection.prototype.isConnected = function() {
 	return connected;
 };
 
-module.exports = {
-	Connection,
-};
+module.exports = Connection;
