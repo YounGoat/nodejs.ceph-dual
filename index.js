@@ -16,7 +16,7 @@ function createConnection(optionGroups) {
 }
 
 function isConnection(conn) {
-    return conn instanceof dualSwift.Connection;
+    return conn instanceof Connection;
 }
 
 function getConnectionStyle(conn) {
@@ -24,9 +24,7 @@ function getConnectionStyle(conn) {
         return null;
     }
 
-    let style = conn.conns[0].get('style');
-    let same = conn.conns.every(subconn => subconn.get('style') == style);
-    return same ? style : 'mixed';
+    return conn.style;
 }
 
 module.exports = {

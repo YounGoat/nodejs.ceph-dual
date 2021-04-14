@@ -71,7 +71,7 @@ Connection.prototype._action = function(action, callback) {
 		let conn = this.conns[0];
 		return conn[fnName].apply(conn, arguments);
 	};
-}); 
+});
 
 Connection.prototype.get = function(name) {
 	let conn = this.conns[0];
